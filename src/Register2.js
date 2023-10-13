@@ -2,16 +2,24 @@ import { useRef, useState, useEffect } from "react";
 import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from './api/axios';
+import { useNavigate } from "react-router-dom";
+import './css/Register2.css';
 
 const USER_REGEX = /^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 const REGISTER_URL = '/register';
 const NAME_REGEX=/^[a-zA-Z\s.]{1,27}$/;
 const PHONE_REGEX=/^[0-9]{10,11}$/;
-
+const securityQuestions = [
+    { value: 'What is your favourite cartoon character', label: 'What is your favourite cartoon character' },
+    { value: "What is your pet's name?", label: 'What is your pet\'s name?' },
+    { value: 'What was the name of your school in first standard', label: 'What was the name of your school in first standard' },
+  ];
+ 
 const Register2 = () => {
     const userRef = useRef();
     const errRef = useRef();
+    const navigate=useNavigate();
 
     const [user, setUser] = useState('');
     const [username,setUserName]=useState('');
@@ -20,6 +28,17 @@ const Register2 = () => {
     const [errMsg, setErrMsg] = useState('');
     const [matchPwd, setMatchPwd] = useState('');
     const [phone,setPhoneNumber]=useState('');
+    const [date,setDate]=useState('');
+    const [selectedSecurityQuestion, setSelectedSecurityQuestion] = useState('');
+    const [securityAnswer, setSecurityAnswer] = useState('');
+    const customStyles = {
+        menu: (provided) => ({
+          ...provided,
+          backgroundColor: '#ccc', // Grey background color
+          color: '#333'
+        }),
+      };
+   
     
 
     const [validName, setValidName] = useState(false);
@@ -36,6 +55,7 @@ const Register2 = () => {
     const [UserNameFocus,setUserNameFocus]=useState(false);
     const [LastNameFocus,setLastNameFocus]=useState(false);
     const [PhoneNumberFocus,setPhoneNumberFocus]=useState(false);
+    const fullname=username+" "+lastname;
     
     useEffect(()=>{
         setValidPhoneNumber(PHONE_REGEX.test(phone));
@@ -65,6 +85,8 @@ const Register2 = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        console.log(selectedSecurityQuestion);
+        console.log(securityAnswer);
         // if button enabled with JS hack
         const v1 = USER_REGEX.test(user);
         const v2 = PWD_REGEX.test(pwd);
@@ -73,23 +95,37 @@ const Register2 = () => {
             return;
         }
         try {
-            const response = await axios.post(REGISTER_URL,
-                JSON.stringify({ user, pwd }),
-                {
-                    headers: { 'Content-Type': 'application/json' },
-                    withCredentials: true
-                }
-            );
-            console.log(response?.data);
-            console.log(response?.accessToken);
-            console.log(JSON.stringify(response))
-            setSuccess(true);
+           
+            const response=await fetch("http://127.0.0.1:3500/api/login",{
+                method:"POST",
+                headers:{
+                    'Content-Type':'application/json'
+                },
+                body:JSON.stringify({
+                    fullname,
+                    date,
+                    user,
+                    phone,
+                    pwd,
+                    selectedSecurityQuestion,
+                    securityAnswer
+                })
+            })
+            console.log(response);
+
+            // console.log(response?.data);
+            // console.log(response?.accessToken);
+            // console.log(JSON.stringify(response))
+            // setSuccess(true);
             //clear state and controlled inputs
             //need value attrib on inputs for this
             setUser('');
             setPwd('');
             setMatchPwd('');
             setUserName('');
+            setLastName('');
+            setPhoneNumber('');
+            navigate("/login");
         } catch (err) {
             if (!err?.response) {
                 setErrMsg('No Server Response');
@@ -101,9 +137,12 @@ const Register2 = () => {
             errRef.current.focus();
         }
     }
+    function changeQuestionHandler(event){
+        setSelectedSecurityQuestion(event.target.value)
+    }
 
     return (
-        <>
+        <div className="register2">
             {success ? (
                 <section>
                     <h1>Success!</h1>
@@ -163,6 +202,28 @@ const Register2 = () => {
                             <FontAwesomeIcon icon={faInfoCircle} />
                             Enter atleast 1 character.<br />
                         </p>
+
+                        <label htmlFor="date">
+                            DOB:
+                            {/* <FontAwesomeIcon icon={faCheck} className={validName ? "valid" : "hide"} />
+                            <FontAwesomeIcon icon={faTimes} className={validName || !user ? "hide" : "invalid"} /> */}
+                        </label>
+                        <input
+                            type="date"
+                            id="date"
+                            ref={userRef}
+                            autoComplete="off"
+                            onChange={(e) => setDate(e.target.value)}
+                            value={date}
+                            required
+                            // aria-invalid={validName ? "false" : "true"}
+                        //     aria-describedby="uidnote"
+                        //     onFocus={() => setUserFocus(true)}
+                        //     onBlur={() => setUserFocus(false)}
+                        // />
+                        />
+                        {/* <p id="uidnote" className={userFocus && user && !validName ? "instructions" : "offscreen"}></p> */}
+
                         
                         <label htmlFor="username">
                             Email id:
@@ -257,7 +318,34 @@ const Register2 = () => {
                             Must match the first password input field.
                         </p>
 
-                        <button disabled={!validName || !validPwd || !validMatch ? true : false}>Next</button>
+                        <select
+                        id="security-question"
+                        value={selectedSecurityQuestion}
+                        onChange={changeQuestionHandler}
+                        styles={customStyles} // Apply custom styles
+                        required
+                        >
+                            <option value=''>---select a security question----</option>
+                            <option value="What is your favourite cartoon character">What is your favourite cartoon character</option>
+                            <option value="What is your pet's name?">What is your pet's name?</option>
+                            <option value="What was the name of your school in first standard">What was the name of your school in first standard</option>
+                            
+                        </select>
+
+
+
+                        <label htmlFor="security-answer">Security Answer:</label>
+                        <textarea
+                        id="security-answer"
+                        name="securityAnswer"
+                        placeholder="Enter your answer here"
+                        value={securityAnswer}
+                        onChange={(e) => setSecurityAnswer(e.target.value)}
+                        required
+                        />
+
+
+                        <button className="register2button" disabled={!validName || !validPwd || !validMatch ? true : false}>Next</button>
                     </form>
                     <p>
                         Already have an account ?&nbsp;
@@ -267,7 +355,7 @@ const Register2 = () => {
                     </p>
                 </section>
             )}
-        </>
+        </div>
     )
 }
 

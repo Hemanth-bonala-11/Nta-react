@@ -3,35 +3,19 @@ import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icon
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from './api/axios';
 import React, { Component } from 'react';
+import {useNavigate} from 'react-router-dom'
+import Cookies from "js-cookie";
+import './css/Register.css'
 
-// class App extends Component {
-//     state = {
-//         data: null
-//       };
-    
-//       componentDidMount() {
-//         this.callBackendAPI()
-//           .then(res => this.setState({ data: res.express }))
-//           .catch(err => console.log(err));
-//       }
-//         // fetching the GET route from the Express server which matches the GET route from server.js
-//       callBackendAPI = async () => {
-//         const response = await fetch('/express_backend');
-//         const body = await response.json();
-    
-//         if (response.status !== 200) {
-//           throw Error(body.message) 
-//         }
-//         return body;
-//       };
-//     }
 
 const USER_REGEX = /^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
-const REGISTER_URL = '/register';
+const REGISTER_URL = 'http://127.0.0.1:3500/api/verify';
 
 
 const Register = () => {
+    const navigate=useNavigate();
+
     const userRef = useRef();
     const errRef = useRef();
 
@@ -86,23 +70,41 @@ const Register = () => {
             return;
         }
         try {
-            const response = await axios.post(REGISTER_URL,
-                JSON.stringify({ user, pwd }),
-                {
-                    headers: { 'Content-Type': 'application/json' },
-                    withCredentials: true
-                }
-            );
-            console.log(response?.data);
-            console.log(response?.accessToken);
-            console.log(JSON.stringify(response))
-            setSuccess(true);
+         
+            const resp =await fetch('http://127.0.0.1:3500/api/verify',{
+                method:"POST",
+                headers:{
+                    'Content-Type':'application/json'
+                },
+                body:JSON.stringify({
+                    user,
+                    pwd
+                })
+            })
+            
+            // console.log(response?.data);
+            // console.log(response?.accessToken);
+            // console.log(JSON.stringify(response))
+            // setSuccess(true);
             //clear state and controlled inputs
             //need value attrib on inputs for this
-            setUser('');
-            setPwd('');
-            setMatchPwd('');
-            setUserName('');
+            // console.log(resp.json());
+            const output=await resp.json();
+            Cookies.set('access_token', output.token);
+            console.log(output.token);
+            console.log(resp.status);
+            if(resp['status']===200){
+                navigate('/studentdashboard',{state:{email:user}});
+            }
+            else{
+                setErrMsg("Enter Valid Credentials");
+            }
+
+            // setUser('');
+            // setPwd('');
+            // setMatchPwd('');
+            // setUserName('');
+            
         } catch (err) {
             if (!err?.response) {
                 setErrMsg('No Server Response');
@@ -116,7 +118,7 @@ const Register = () => {
     }
 
     return (
-        <>
+        <div className="register">
             {success ? (
                 <section>
                     <h1>Success!</h1>
@@ -173,17 +175,12 @@ const Register = () => {
                             onFocus={() => setPwdFocus(true)}
                             onBlur={() => setPwdFocus(false)}
                         />
-                        {/* <p id="pwdnote" className={pwdFocus && !validPwd ? "instructions" : "offscreen"}>
-                            <FontAwesomeIcon icon={faInfoCircle} />
-                            8 to 24 characters.<br />
-                            Must include uppercase and lowercase letters, a number and a special character.<br />
-                            Allowed special characters: <span aria-label="exclamation mark">!</span> <span aria-label="at symbol">@</span> <span aria-label="hashtag">#</span> <span aria-label="dollar sign">$</span> <span aria-label="percent">%</span>
-                        </p> */}
+                       
 
 
                         
-
-                        <button disabled={!validName || !validPwd  ? true : false}>Login</button>
+                        
+                        <button className="registerButton" disabled={!validName || !validPwd  ? true : false}>Login</button>
                     </form>
                     <p>
                         Don't have an account ?&nbsp;
@@ -194,12 +191,12 @@ const Register = () => {
                     <p align="center">
                         &nbsp;
                             {/*put router link here*/}
-                            <a href="#" id="lg-link">forgot password</a>
+                            <a href="/forgotpassword" id="lg-link">forgot password</a>
         
                     </p>
                 </section>
             )}
-        </>
+        </div>
     )
 }
 

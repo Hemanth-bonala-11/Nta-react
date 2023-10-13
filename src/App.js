@@ -1,22 +1,14 @@
 import Register from './Register';
 import Register2 from './Register2';
 import Layout from './Layout';
+import StudentDashBoard from './components/StudentDashboard';
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
-// import {Link} from "react-router-dom"; 
-
-// function App() {
-
-//   return (
-//     <main className="App">
-//       <Register />,
-//       <Register2 />,
-//       <Layout />
-//     </main>
-//   );
-// }
-
+import ForgotPasswordpage from './components/ForgotPasswordpage'
+import ForgotPasswordVerify from './components/ForgotPasswordVerify';
+import ResetPassword from './components/ResetPassword';
+// import {Link} from "react-router-dom
 // export default App;
-export default function App() {
+function App() {
   return (
     // <div>
     //   <h1>Hello</h1>
@@ -29,14 +21,19 @@ export default function App() {
 
       <Routes>
       
-        <Route path="/" element={<Layout />}>
-          
-        </Route>
+        <Route path="/" element={<Layout/>}/>
         <Route  path="/signup" element={<Register2 />} />
         <Route path='/login' element={<Register />} />
+        <Route path='/studentdashboard' element={<StudentDashBoard />}/>
+        <Route path='/forgotpassword' element={<ForgotPasswordpage/>}/>
+        <Route path='/forgotpasswordVerify' element={<ForgotPasswordVerify/>}/>
+        <Route path='/resetpassword' element={<ResetPassword/>}/>
+        
       </Routes>
     </BrowserRouter> 
     // </div>
     
   );
 }
+
+export default App;
