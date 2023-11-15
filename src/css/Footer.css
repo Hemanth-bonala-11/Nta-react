@@ -1,0 +1,89 @@
+
+
+.footerbdy
+{
+background-color: #111111;
+}
+.footer
+{
+    display: flex;
+    flex-direction: row;
+    width: 97vw;
+    padding-top: 10vh;
+    padding-bottom: 10vh;
+    color:white;
+    gap:20px;
+}
+.footer a:hover
+{
+    color: aqua;
+}
+.details
+{
+    display: flex;
+    flex-direction: column;
+    width: 25%;
+    margin: 2%;
+    gap: 2%;
+}
+.details a
+{
+  color: aliceblue;
+  text-decoration: none;
+}
+.ftradrs
+{
+    display: flex;
+    align-items: center;
+    margin: 2%;
+    gap: 4% ;
+}
+#email
+{
+    display: flex;
+    flex-direction: row;
+    margin: 2%;
+    
+    gap: 4%;
+}
+#ctus
+{
+    display: flex;
+    margin: 2%;
+    gap: 4%;
+}
+.coursedetails
+{
+    display: flex;
+    flex-direction: row;
+    width: 75%;
+    gap: 5%;
+    padding-top: 2%;
+}
+.coursedetails .link
+{
+ text-decoration: none;
+ color: aliceblue;
+}
+.coursedetails div
+{
+    display: flex;
+    flex-direction:column;
+    gap: 2%;
+    align-items: left;
+}
+.footer h1,h3,h2{
+    color: aqua;
+}
+
+.footer-main{
+    font-size: 16px;
+    background-color: rgb(43,43,43);
+}
+#locicon{
+    display: flex;
+}
+#emailadd{
+    margin-top: 6%;
+}
+

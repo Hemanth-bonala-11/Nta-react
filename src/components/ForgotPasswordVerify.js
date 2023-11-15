@@ -4,7 +4,8 @@ function ForgotPasswordVerify(){
     const [securityQuestion, setSecurityQuestion] = useState('');
     const [securityAnswer,setSecurityAnswer]=useState('');
     const [email,setEmail]=useState('');
-    const [errMsg,setErrMsg]=useState('')
+    const [errMsg,setErrMsg]=useState('');
+    const [securityAnswerLower,setSecurityAnswerLower]=useState('')
     const location = useLocation();
     const navigate=useNavigate();
 
@@ -28,6 +29,7 @@ function ForgotPasswordVerify(){
     },[])
     async function submitHandler(event){
         event.preventDefault();
+        setSecurityAnswerLower(securityAnswer.toLowerCase())
         const resp=await fetch('http://127.0.0.1:3500/api/checkAnswer',{
           method:"POST",
           headers:{
@@ -35,7 +37,7 @@ function ForgotPasswordVerify(){
         },
         body:JSON.stringify({
           email,
-          securityAnswer
+          securityAnswerLower
         })
 
         })

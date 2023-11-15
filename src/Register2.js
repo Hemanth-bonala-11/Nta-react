@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from './api/axios';
 import { useNavigate } from "react-router-dom";
 import './css/Register2.css';
+import toast from "react-hot-toast";
 
 const USER_REGEX = /^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
@@ -48,6 +49,7 @@ const Register2 = () => {
     const [success, setSuccess] = useState(false);
     const [validUser, setValidUserName] = useState(false);
     const [ValidLastName,setValidLastName]=useState(false);
+    const [securityAnswerLower,setSecurityAnswerLower]=useState('');
     
     const [pwdFocus, setPwdFocus] = useState(false);
     const [matchFocus, setMatchFocus] = useState(false);
@@ -95,6 +97,7 @@ const Register2 = () => {
             return;
         }
         try {
+            setSecurityAnswerLower(securityAnswer.toLowerCase());
            
             const response=await fetch("http://127.0.0.1:3500/api/login",{
                 method:"POST",
@@ -108,7 +111,7 @@ const Register2 = () => {
                     phone,
                     pwd,
                     selectedSecurityQuestion,
-                    securityAnswer
+                    securityAnswerLower
                 })
             })
             console.log(response);
@@ -126,6 +129,7 @@ const Register2 = () => {
             setLastName('');
             setPhoneNumber('');
             navigate("/login");
+            toast.success("registration successful");
         } catch (err) {
             if (!err?.response) {
                 setErrMsg('No Server Response');
@@ -154,7 +158,7 @@ const Register2 = () => {
                 <section>
                     <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
                     <h1 align="center">Signup</h1>
-                    <form onSubmit={handleSubmit}>
+                    <form onSubmit={handleSubmit} id="form">
                         <label htmlFor="first-name">
                             First Name:
                             <FontAwesomeIcon icon={faCheck} className={validUser ? "valid" : "hide"} />

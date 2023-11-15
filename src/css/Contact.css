@@ -1,0 +1,78 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-style: 'Serif';
+}
+.main
+{
+    background-color: #131417;
+    display: flex;
+    flex-direction: row;
+    width: 100vw;
+}
+.form3
+{
+    width: 40%;
+    color: rgb(252, 250, 247);
+    font-family: 'Times New Roman', Times, serif;
+    
+}
+.feedbackform
+{
+    display: flex;
+    flex-direction: column;
+    margin: 2%;
+    justify-content: space-between;
+}
+#submit
+{
+    width:100px;
+    position:relative;
+    right:0;
+    padding-left: 1%;
+    padding-right: 1%;
+    margin: 1%;
+    border-radius: 5px;
+    height: 4vh;
+    font-size: 14px;
+    font-style: normal;
+    padding-bottom: 5%;
+}
+#input,.labels,#Selectissue{
+    margin: 1%;
+    border-radius: 5px;
+    height: 4vh;
+    
+}
+#Selectissue{
+    font-size: 14px;
+}
+
+
+
+
+#feedback
+{
+    margin: 1%;
+    border-radius: 5px;
+}
+#input
+{
+    font-size: 14px;
+}
+
+.map
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 60%;
+}
+#option{
+    font-size: 14px;
+}
+.contact-heading{
+    margin-top: 4%;
+    margin-bottom: 4%;
+}

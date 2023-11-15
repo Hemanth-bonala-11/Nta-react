@@ -1,9 +1,8 @@
 
-/* style_landing_page.css */
 .navb{
     height: 100vh;
     width: 100%;
-    background-color: #150802;
+   
     background-position: center;
 }
 nav
@@ -11,8 +10,17 @@ nav
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding-left: 10%;
-    padding-right: 10%;
+    padding-left: 3%;
+    padding-right: 5%;
+    padding-bottom: 1%;
+    /* border-bottom: 2px solid beige;
+    border-left:2px solid beige;
+    border-right:2px solid beige; */
+    border-radius: 10px;
+    align-items: center;
+}
+.sign-log-buttons{
+    margin-left: 15%;
 }
 .LOGO
 {
@@ -31,7 +39,7 @@ nav ul li{
 nav ul li a{
     color: white;
     text-decoration: none;
-    font-weight: bold;
+    font-size:large ;
 }
 nav ul li a:hover{
 color: #00dce7;
@@ -176,4 +184,21 @@ img{
 }
 .upper{
     width: 100%;
+}
+
+nav{
+    background-color: rgb(34,34,33);
+}
+.navb{
+    background: linear-gradient(rgb(54,54,54),rgb(0,0,0) 70%);
+}
+.upper{
+    width: 98vw;
+    overflow: hidden;
+}
+.navbar{
+   
+    width: 100%;
+   
+    background-position: center;
 }

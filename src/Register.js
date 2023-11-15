@@ -6,6 +6,8 @@ import React, { Component } from 'react';
 import {useNavigate} from 'react-router-dom'
 import Cookies from "js-cookie";
 import './css/Register.css'
+import toast from "react-hot-toast";
+import {BsEyeFill,BsEyeSlashFill} from "react-icons/bs"
 
 
 const USER_REGEX = /^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$/;
@@ -94,7 +96,15 @@ const Register = () => {
             console.log(output.token);
             console.log(resp.status);
             if(resp['status']===200){
-                navigate('/studentdashboard',{state:{email:user}});
+                if(user.split("@")[1]==='nitj.ac.in'){
+                    navigate('/teacherdashboard',{state:{email:user}});
+                    toast.success("login successful");
+                }
+                else{
+                    navigate('/studentdashboard',{state:{email:user}});
+                    toast.success("login successful");
+                }
+                
             }
             else{
                 setErrMsg("Enter Valid Credentials");
@@ -130,7 +140,7 @@ const Register = () => {
                 <section>
                     <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
                     <h1 align="center">NTA</h1>
-                    <form onSubmit={handleSubmit}>
+                    <form onSubmit={handleSubmit} id="form">
                
                         
                         <label htmlFor="username">
