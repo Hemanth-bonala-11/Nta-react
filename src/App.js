@@ -10,6 +10,8 @@ import TeacherDashboard from './pages/TeacherDashboard';
 import AdminDashboard from './pages/AdminDashboard';
 import Contact from './components/Contact';
 import Footer from './components/Footer'
+import AddCourse from './components/AddCourse.js'
+import Profile from './components/Profile.js';
 // import {Link} from "react-router-dom
 // export default App;
 function App() {
@@ -36,7 +38,10 @@ function App() {
         <Route path='/admindashboard/*' element={<AdminDashboard/>}/>
         <Route path='/contactus' element={<Contact/>}/>
         <Route path='/footer' element={<Footer/>}/>
+        <Route path='/addCourse' element={<AddCourse/>}/>
+        <Route path='/profile' element={<Profile/>}/>
       </Routes>
+      
     </BrowserRouter> 
     // </div>
     

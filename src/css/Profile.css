@@ -1,0 +1,65 @@
+.profile-main {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: #f4f4f4;
+}
+
+.profile-container {
+    max-width: 900px;
+    margin: 50px auto;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.profile-header {
+    text-align: center;
+}
+
+.profile-header img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+
+.profile-details {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+
+.detail {
+    text-align: center;
+}
+
+.detail h2 {
+    color: #333;
+    font-size: smaller;
+}
+
+.detail p {
+    color: #777;
+    display: inline-block;
+    font-size: smaller;
+}
+p #email
+{
+    font-size: x-small;
+}
+/* Existing styles remain unchanged */
+
+.edit-form {
+    display: none;
+    margin-top: 20px;
+    text-align: center;
+}
+
+.edit-form label,
+.edit-form input,
+.edit-form button {
+    margin-bottom: 10px;
+}

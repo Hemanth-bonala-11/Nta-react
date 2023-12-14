@@ -129,7 +129,7 @@ s0.parentNode.insertBefore(s1,s0);})();
             <li className="options-parent"><a href="#"><div className="options"><div><FaBook/> </div><div>Enrolled Courses</div></div></a></li>
             <li className="options-parent"><a href="#"><div className="options"><div><AiOutlinePlus/></div> <div>All Courses</div></div></a></li>
             {/* <li className="options-parent"><a href="#"><div className="options"><div><FiEdit/> </div><div>Edit Course</div></div></a></li> */}
-            <li className="options-parent"><a href="#"><div className="options"><div><CgProfile/> </div><div>Profile</div></div></a></li>
+            <li className="options-parent"><a href="#"><div className="options"><div><CgProfile/> </div><div>User Profile</div></div></a></li>
             <li className="options-parent"><a href="#"><div className="options"><div><HiOutlineLogout/></div> <div>Log Out</div></div></a></li>
            
         </ul>
